@@ -3,15 +3,12 @@ const Player = require("../lib/player");
 const Potion = require("../lib/Potion");
 jest.mock("../lib/Potion");
 
-test ("subtracts from player's health", () => {
+test ("uses a potion from inventory", () => {
     const player = new Player("Dave");
-    const oldHealth = player.health;
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
 
-    player.reduceHealth(5);
+    player.usePotion(1);
 
-    expect(player.health).toBe(oldHealth - 5);
-
-    player.reduceHealth(99999);
-
-    expect(player.health).toBe(0);
+    expect(player.inventory.length).toBeLessThan(oldCount);
 });
